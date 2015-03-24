@@ -12,28 +12,52 @@ github: http://github. /AtsushiHashimoto/sinatra-static
 
 ## How to use
 
-1 Put 'sinatra-static.rb' in anywhere your project.
 
-2 Move to you project root
+1 Include sinatra-static.rb
+    require '/path/to/sinatra-static.rb' 
 
-3 Create views/publish_targets
+2 Register the module as a helper 
+    helpers Sinatra::StaticPublish
 
-    mkdir views/publish_targets
-
-4 Create your templates in views/publish_targets
-
-5.1 (Case where you generate static files by command line tools)
-
-5.2 (Case where you generate static files via HTTP GET)
-
-  1 Put following code in your sinatra router
-
-    require '/path/to/sinatra-static.rb'
-
-    ...
-
-    get '/publish' do
-        publish_static_html 'target_dir_in_views'
+3 Call 'static_publish' function
+    static_publish(src_uri_path,tar_uri_path, [reference_file1, ...])
+    
+## Example
+    require 'sinatra/base'
+    require 'haml'
+    
+    require 'lib/sinatra/sinatra-static.rb'
+    
+    class MyApp < Sinatra::Base
+    
+			configure do
+				helpers Sinatra::StaticPublish
+			end
+    
+			# Rendering source (dynamic uri)
+			get '/static/*.*' do |file,template|
+				path = '/static/' + file
+				send template, :"#{path}"
+			end
+			
+			# Switch link for publish static files
+			get '/publish' do
+				buf = []
+				
+				targets = Dir.glob(settings.views + '/static/**/*.haml')
+				targets.each{|f|
+					src_rel_path = f.gsub(settings.views,'')
+					
+					tar_rel_path = '/published/' + src_rel_path.gsub('.haml','.html')
+					src_path, result, option = static_publish(src_rel_path,tar_rel_path, [f])
+					buf << [src_path,result,option]
+				}
+				response_html = ""
+				buf.each{|b|
+					response_html += haml "%li #{b[0]} #{b[1]} #{b[2]}\n"
+				}
+				return response_html
+			end
     end
 
-  2 Then access to /publish via your web browser.
+MyApp.run!
