@@ -59,5 +59,5 @@ github: http://github. /AtsushiHashimoto/sinatra-static
 				return response_html
 			end
     end
-
-MyApp.run!
+    
+    MyApp.run!
