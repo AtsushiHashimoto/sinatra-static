@@ -30,7 +30,9 @@ module Sinatra
         return make_response(src_path,:no_change,dist_path) if body==body_old
       end
 
-      File.open(dist_fullpath,'w').write(body)
+      out = File.open(dist_fullpath,'w')
+      out.write(body)
+      out.close
       return make_response(src_path,file_status,dist_path)
     end
 
