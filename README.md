@@ -4,7 +4,7 @@
 This software is released under the MIT License, see LICENSE.
 
 ## Download
-github: http://github. /AtsushiHashimoto/sinatra-static
+- http://github.com/AtsushiHashimoto/sinatra-static
 
 ## Install
 
