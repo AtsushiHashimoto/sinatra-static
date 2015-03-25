@@ -19,7 +19,7 @@ This software is released under the MIT License, see LICENSE.
 2 Register the module as a helper 
     helpers Sinatra::StaticPublish
 
-3 Call 'static_publish' function
+3 Call 'static_publish' function in your sinatra application
     static_publish(src_uri_path,tar_uri_path, [reference_file1, ...])
     
 ## Example
