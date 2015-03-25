@@ -23,5 +23,5 @@ github: http://github. /AtsushiHashimoto/sinatra-static
     static_publish(src_uri_path,tar_uri_path, [reference_file1, ...])
     
 ## Example
-    [Check out an example!](examples/app.rb)
-    [Readme for the example](examples/readme.md)
+- [Check out an example!](examples/app.rb)
+- [Readme for the example](examples/readme.md)
